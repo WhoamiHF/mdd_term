@@ -1,0 +1,50 @@
+grammar org.xtext.example.Term_project with org.eclipse.xtext.xbase.Xbase
+
+generate term_project "http://www.xtext.org/example/Term_project"
+
+Model:
+	statements+=Team_goal_or_task* simulate=SimulateStatement;
+
+Team_goal_or_task:
+	TeamDefinition | GoalDefinition | TaskDefinition
+;
+	
+TeamDefinition:
+	'Team' name=ID '{' robots+=RobotDefinition* '}'
+;
+
+RobotDefinition:
+	'Robot' name=ID 'at' '(' x=INT ',' y=INT ')'
+;
+
+GoalDefinition:
+	'Goal' name=ID 'at' '(' x=INT ',' y=INT ')'
+;
+
+TaskDefinition:
+	'Task' name=ID ('if' condition=Condition)? '{' statements+=TaskStatement* '}'
+;
+
+Condition:
+	team=ID ':' robot=ID 'distanceTo' goal=ID comparator=Comparator distance=INT
+;
+
+Comparator:
+	'isLessThan' | 'isGreaterThan' | 'isEqual'
+;
+
+TaskStatement:
+	team=ID (':' robot=ID)? (statement=MoveToStatement | 'turnOff')
+;
+
+MoveToStatement:
+	 'moveTo' goal=ID
+;
+
+SimulateStatement:
+	'Simulate' 'until' condition=Condition '{' runs+=RunStatement+ '}'
+;
+
+RunStatement:
+	'Run' function=ID
+;

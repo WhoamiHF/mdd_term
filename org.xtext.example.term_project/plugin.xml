@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+	<extension point="org.eclipse.emf.ecore.generated_package">
+		<package
+			uri = "http://www.xtext.org/example/Term_project"
+			class = "org.xtext.example.term_project.Term_projectPackage"
+			genModel = "model/generated/Term_project.genmodel" />
+	</extension>
+</plugin>
